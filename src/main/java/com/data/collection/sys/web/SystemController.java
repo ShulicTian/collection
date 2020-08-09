@@ -11,8 +11,9 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 系统基础信息Controller
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @author ShulicTian
  * @date 2020/01/10
  */
-@Controller
+@RestController
 @RequestMapping("/collection/sys")
 public class SystemController {
 
@@ -37,8 +38,10 @@ public class SystemController {
      */
     @CrossOrigin
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login() {
-        return "redirect:/login";
+    public ResponseEntity login(HttpServletResponse response) {
+        ResponseEntity responseEntity = new ResponseEntity();
+        response.setStatus(401);
+        return responseEntity;
     }
 
     /**
@@ -48,7 +51,6 @@ public class SystemController {
      * @param rememberMe
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ResponseEntity<UserEntity> login(@RequestBody UserEntity userEntity, boolean rememberMe) {
         ResponseEntity<UserEntity> result = new ResponseEntity();
@@ -98,7 +100,6 @@ public class SystemController {
      *
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "logout")
     public ResponseEntity<Boolean> logout() {
 
@@ -124,7 +125,6 @@ public class SystemController {
      *
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "saveUser", method = RequestMethod.POST)
     public ResponseEntity<UserEntity> saveUser(@RequestBody UserEntity user) {
 
@@ -143,7 +143,6 @@ public class SystemController {
     /**
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "unauthorized")
     public ResponseEntity<String> unauthorized() {
         ResponseEntity<String> result = new ResponseEntity();
