@@ -22,7 +22,8 @@ public class TaskService {
         TaskEntity taskEntity = new TaskEntity();
         taskEntity.setUserId(userId);
         Example<TaskEntity> example = Example.of(taskEntity);
-        return taskDao.findAll(example);
+        List<TaskEntity> list = taskDao.findAll(example);
+        return list;
     }
 
     @Modifying

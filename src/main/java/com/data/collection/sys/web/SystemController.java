@@ -144,15 +144,10 @@ public class SystemController {
      * @return
      */
     @RequestMapping(value = "unauthorized")
-    public ResponseEntity<String> unauthorized() {
-        ResponseEntity<String> result = new ResponseEntity();
-        try {
-            result.setResult("");
-            result.setCode(ResponseEntity.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    public ResponseEntity unauthorized(HttpServletResponse response) {
+        ResponseEntity responseEntity = new ResponseEntity();
+        response.setStatus(-401);
+        return responseEntity;
     }
 
 }

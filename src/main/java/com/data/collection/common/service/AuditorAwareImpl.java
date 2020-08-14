@@ -16,7 +16,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.of(UserUtils.getCurrentUserId().toString());
+        return Optional.of(UserUtils.getCurrentUserId()!=null?UserUtils.getCurrentUserId().toString():"");
     }
 
 }
