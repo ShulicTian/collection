@@ -1,9 +1,8 @@
 package com.data.collection.task.web;
 
 import com.data.collection.common.entity.ResponseEntity;
-import com.data.collection.task.entity.TaskEntity;
-import com.data.collection.task.service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.data.collection.task.entity.ScheduleEntity;
+import com.data.collection.task.service.ScheduleService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,25 +11,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/collection/task")
-public class TaskController {
+@RequestMapping("/collection/schedule")
+public class ScheduleController {
 
-    private final TaskService taskService;
+    private final ScheduleService scheduleService;
 
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
+    public ScheduleController(ScheduleService scheduleService) {
+        this.scheduleService = scheduleService;
     }
 
     /**
-     * 根据用户ID获取任务列表
+     * 获取任务分配列表
      *
-     * @param userId
      * @return
      */
-    @RequestMapping(value = "/getTaskList", method = RequestMethod.GET)
-    public ResponseEntity<List<TaskEntity>> getCommunityList(Integer userId) {
+    @RequestMapping(value = "/getScheduleList", method = RequestMethod.GET)
+    public ResponseEntity<List<ScheduleEntity>> getScheduleList() {
         ResponseEntity responseEntity = new ResponseEntity();
-        responseEntity.setResult(taskService.getCommunityList(userId));
+        responseEntity.setResult(scheduleService.getScheduleList());
         responseEntity.setCode(ResponseEntity.OK);
         return responseEntity;
     }
@@ -38,14 +36,14 @@ public class TaskController {
     /**
      * 添加任务
      *
-     * @param taskEntity
+     * @param scheduleEntity
      * @return
      */
-    @RequestMapping(value = "/addTask", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> addTask(@RequestBody TaskEntity taskEntity) {
+    @RequestMapping(value = "/saveSchedule", method = RequestMethod.POST)
+    public ResponseEntity<Boolean> saveSchedule(@RequestBody ScheduleEntity scheduleEntity) {
         ResponseEntity<Boolean> responseEntity = new ResponseEntity();
         try {
-            taskService.addTask(taskEntity);
+            scheduleService.saveSchedule(scheduleEntity);
             responseEntity.setResult(true);
             responseEntity.setCode(ResponseEntity.OK);
         } catch (Exception e) {
@@ -61,11 +59,11 @@ public class TaskController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/removeTask", method = RequestMethod.DELETE)
-    public ResponseEntity<Boolean> removeTask(Integer id) {
+    @RequestMapping(value = "/removeSchedule", method = RequestMethod.DELETE)
+    public ResponseEntity<Boolean> removeSchedule(Integer id) {
         ResponseEntity<Boolean> responseEntity = new ResponseEntity();
         try {
-            taskService.removeTask(id);
+            scheduleService.removeSchedule(id);
             responseEntity.setResult(true);
             responseEntity.setCode(ResponseEntity.OK);
         } catch (Exception e) {
