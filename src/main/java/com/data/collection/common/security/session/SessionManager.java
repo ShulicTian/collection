@@ -31,16 +31,19 @@ import java.util.Date;
  */
 public class SessionManager extends DefaultWebSessionManager {
 
+    private final static String AUTH_TOKEN = "authToken";
+    private final static String SYS_COOKIE = "sys_cookie";
+
     public SessionManager() {
         super();
     }
 
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-        String token = WebUtils.toHttp(request).getHeader("authToken");
+        String token = WebUtils.toHttp(request).getHeader(AUTH_TOKEN);
         if (StringUtils.isNotBlank(token)) {
             // 是否将token保存到cookie，浏览器模式下使用此参数。
-            if (WebUtils.isTrue(request, "__cookie")) {
+            if (WebUtils.isTrue(request, SYS_COOKIE)) {
                 HttpServletRequest rq = (HttpServletRequest) request;
                 HttpServletResponse rs = (HttpServletResponse) response;
                 Cookie template = getSessionIdCookie();
