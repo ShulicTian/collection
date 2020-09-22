@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 任务分配
+ *
+ * @author tianslc
+ */
 @RestController
 @RequestMapping("/collection/schedule")
 public class ScheduleController {
