@@ -3,11 +3,13 @@ package com.data.collection.common.config;
 import com.data.collection.common.entity.FilterChainDefinition;
 import com.data.collection.common.entity.ShiroProperties;
 import com.data.collection.common.filters.AuthFilter;
+import com.data.collection.common.security.ShiroSessionListener;
 import com.data.collection.common.security.SystemAuthorizingRealm;
 import com.data.collection.common.security.session.CacheSessionDAO;
 import com.data.collection.common.security.session.SessionManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -18,10 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Shiro配置类
@@ -62,10 +61,23 @@ public class ShiroConfig {
     public SessionManager sessionManager() {
         //将我们继承后重写的shiro session 注册
         SessionManager sessionManager = new SessionManager();
+        List<SessionListener> listeners = new ArrayList<>();
+        listeners.add(sessionListener());
+        sessionManager.setSessionListeners(listeners);
         //如果后续考虑多tomcat部署应用，可以使用shiro-redis开源插件来做session 的控制，或者nginx 的负载均衡
 
         sessionManager.setSessionDAO(new CacheSessionDAO());
         return sessionManager;
+    }
+
+    /**
+     * 配置session监听
+     *
+     * @return
+     */
+    @Bean
+    public ShiroSessionListener sessionListener() {
+        return new ShiroSessionListener();
     }
 
     /**

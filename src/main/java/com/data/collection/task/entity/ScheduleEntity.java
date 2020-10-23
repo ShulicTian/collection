@@ -3,10 +3,9 @@ package com.data.collection.task.entity;
 import com.data.collection.common.entity.BaseEntity;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Time;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Data
 @Entity
@@ -25,7 +24,7 @@ public class ScheduleEntity extends BaseEntity {
     @Column(name = "member_id")
     private String memberId;
 
-    @Column(name = "token")
+    @Column(name = "token", columnDefinition = "varchar(1000) default ''")
     private String token;
 
     @Column(name = "user_id")
